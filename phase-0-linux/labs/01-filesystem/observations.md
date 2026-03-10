@@ -49,3 +49,35 @@ To be honnest when working with graphical interface these commands seems to be a
 ```bash
 cp -u *.txt /path/to/destination/
 ```
+
+## Observation 8
+
+In Linux, a file is not just a name. Internally, every file is represented by a data structure called an inode.
+
+The inode stores important metadata about the file, including:
+
+- file size
+- file owner
+- file permissions
+- timestamps (creation, modification, access)
+- pointers to the disk blocks where the file data is stored
+
+Interestingly, the inode does not store the filename. The filename is stored in the directory and simply points to the inode.
+
+This explains several Linux behaviors:
+
+- Multiple filenames can point to the same inode (hard links).
+- A program can continue running even if its file is deleted, because the process still references the inode.
+- A filesystem can run out of inodes even if disk space is still available.
+
+To view inode numbers, we can use the following command:
+
+ls -i
+
+Example:
+
+touch file1
+ln file1 file2
+ls -i
+
+Both files will show the same inode number, meaning they reference the same underlying file data.
